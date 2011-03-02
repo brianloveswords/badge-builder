@@ -1,6 +1,6 @@
 <?php
 class BadgeScript {
-  public $raw_html = '    <li style=\'list-style: none\'><a style=\'cursor: pointer;display: block; padding: 5px; min-height: 60px;border-radius: 5px; background: #fff; border: 1px solid #aaa;\'>    <img src=\'%1$s\' alt=\'%2$s\' style=\'height: 60px; width: 60px; float: left;\'>    <h1 style=\'font-family: Helvetica Neue, sans-serif; font-size: 16px; line-height: 17px; margin: 5px 0 0; padding: 0;letter-spacing: 0;\'>%2$s</h1>    <h2 style=\'font-family: Helvetica Neue, sans-serif; font-size: 14px; line-height: 15px; margin: 0; padding: 0;letter-spacing: 0;\'>%3$s</h2>    </a></li>'; /* path, title, description */
+  public $raw_html = '    <li style=\'list-style: none\'><a style=\'cursor: pointer;display: block; padding: 5px; min-height: 60px;border-radius: 5px; background: #fff; border: 1px solid #aaa;\'>    <img src=\'%1$s\' alt=\'%2$s\' style=\'height: 60px; width: 60px; float: left; margin-right: 5px;\'>    <h1 style=\'font-family: Helvetica Neue, sans-serif; font-size: 16px; line-height: 17px; margin: 5px 0 0; padding: 0;letter-spacing: 0;\'>%2$s</h1>    <h2 style=\'font-family: Helvetica Neue, sans-serif; font-size: 14px; line-height: 15px; margin: 0; padding: 0;letter-spacing: 0;\'>%3$s</h2>    </a></li>'; /* path, title, description */
   public $destination = 'user/scripts/';
   
   public function __construct($image, $title, $description) {

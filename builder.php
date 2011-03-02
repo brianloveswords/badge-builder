@@ -17,5 +17,4 @@ if (!$image->valid()) {
   $script = new BadgeScript($image, $name, $description);
   $script->writefile();
   print $script->badgeHTML() . PHP_EOL;
-  
 }
