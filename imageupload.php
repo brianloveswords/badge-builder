@@ -2,7 +2,7 @@
 
 class ImageUpload {
   public $maxsize = 1073741824; /* 1mb */
-  public $destination = 'images/';
+  public $destination = 'user/images/';
   public $validtypes = array('png', 'gif', 'jpg', 'jpeg');
   public $error = '';
   
@@ -64,6 +64,7 @@ class ImageUpload {
     if (!file_exists($destname) && !move_uploaded_file($source, $destname)) {
       throw new Exception('Could not move uploaded file');
     }
+    $this->_hash = $imghash;
     return ($this->finalpath = $destname);
   }
   public function webpath() {
@@ -71,6 +72,12 @@ class ImageUpload {
       throw new Exception('Cannot get webpath without first moving upload.');
     }
     return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->finalpath);
+  }
+  public function hash() {
+    if (empty($this->_hash)) {
+      throw new Exception('Cannot get hash without first moving upload.');
+    }
+    return $this->_hash;
   }
   
   /* static methods */

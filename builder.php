@@ -1,6 +1,6 @@
 <?php
 require_once "imageupload.php";
-require_once "scriptwriter.php";
+require_once "badgescript.php";
 
 header('Content-Type: text/plain');
 
@@ -14,10 +14,8 @@ if (!$image->valid()) {
   $name = htmlspecialchars($_POST['name']);
   $description = htmlspecialchars($_POST['description']);
   
-  $writer = new BadgeScriptWriter($path, $name, $description);
-  $writer->writefile();
+  $script = new BadgeScript($image, $name, $description);
+  $script->writefile();
+  print $script->badgeHTML() . PHP_EOL;
+  
 }
-
-print_r($_SERVER);
-print_r($_POST);
-print_r($_FILES);
