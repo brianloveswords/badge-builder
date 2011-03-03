@@ -52,7 +52,7 @@
         <div>
           <label>
             <span role='label'>Evidence URL</span>
-            <input type='text' name='proof'>
+            <input type='text' name='evidence'>
           </label>
           <p role='description'>
             Badges are more than just images on a web page. The true value
