@@ -20,7 +20,7 @@ class BadgeScript {
          iframe.style.border = '0';
          iframe.onload = function(){
            iframe.contentDocument.body.innerHTML = badge_html;
-           iframe.style.height = iframe.scrollHeight + 20 + 'px';
+           iframe.style.height = '110px';
          };
          container.appendChild(iframe);
         }

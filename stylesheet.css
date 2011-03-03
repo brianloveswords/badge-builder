@@ -7,7 +7,7 @@ body {
 }
 h1 {
   margin-top: 0;
-  padding-bottom: 5px;
+  margin-bottom: 0px;
   color: #333;
   text-shadow: 1px 1px 1px #fff;
 }
@@ -19,7 +19,7 @@ span[role='label'] {
   display: block;
 }
 div[role='container'] {
-  width: 300px;
+  width: 350px;
   padding: 25px;
   margin: auto;
   background: rgba(255,255,255,0.7);
@@ -32,12 +32,12 @@ p[role='description'] {
   margin: 5px 10px;
   padding: 0;
   font-size: 15px;
-  width: 290px;
+  width: 340px;
 }
 input[type='text'] {
   border-radius: 3px;
   margin: 3px 0;
-  width: 290px;
+  width: 340px;
   border: 1px solid #ccc;
   font-size: 15px;
   color: #333;
@@ -46,4 +46,8 @@ input[type='text']:focus {
   color: #000;
   box-shadow: 0px 0px 5px #06f;
   border: 1px solid #09f;
+}
+textarea {
+  width: 100%;
+  height: 80px;
 }
