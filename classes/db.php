@@ -7,10 +7,6 @@ class Db {
     $this->settings = $settings['db'];
     $this->connect();
   }
-  public function connectionValid() {
-    if (empty($this->handle)) return false;
-    else return true;
-  }
   public function connect() {
     $_db = $this->settings;
     $h = @mysql_connect($_db['host'], $_db['user'], $_db['pass']);
@@ -23,5 +19,9 @@ class Db {
       print_r($this->error);
     }
     return ($this->handle = $h);
+  }
+  public function connectionValid() {
+    if (empty($this->handle)) return false;
+    else return true;
   }
 }
