@@ -45,17 +45,7 @@ class DbTable {
     if (!is_array($search)) {
       throw new DbTableError('findOne(): parameter must be an associative array');
     }
-    // currently we only take the first one.
-    $valid_fields = $this->fields();
-    $field = mysql_real_escape_string(array_pop(array_keys($search)));
-    $value = mysql_real_escape_string(array_pop(array_values($search)));
-    if (empty($valid_fields[$field])) {
-      throw new DbTableError('findOne(): trying to find against a field that does not exist');
-    }
-    $where = sprintf('`%s` = "%s"', $field, $value);
-    $q_string = sprintf('SELECT * FROM `%s` WHERE %s LIMIT 0,1', $this->name(), $where);
-    if (!($query = $this->query($q_string))) return FALSE;
-    return mysql_fetch_object($query);
+    return $this->singularAction('SELECT *', $search);
   }
   
   public function findAll() {
@@ -68,6 +58,17 @@ class DbTable {
   }
   
   private function singularAction($prefix, $terms) {
+    // currently we only take the first one.
+    $valid_fields = $this->fields();
+    $field = mysql_real_escape_string(array_pop(array_keys($terms)));
+    $value = mysql_real_escape_string(array_pop(array_values($terms)));
+    if (empty($valid_fields[$field])) {
+      throw new DbTableError('findOne(): trying to find against a field that does not exist');
+    }
+    $where = sprintf('`%s` = "%s"', $field, $value);
+    $q_string = sprintf('%s FROM `%s` WHERE %s LIMIT 0,1', $prefix, $this->name(), $where);
+    if (!($query = $this->query($q_string))) return FALSE;
+    return mysql_fetch_object($query);
   }
   
   public function fields() {
