@@ -41,6 +41,12 @@ class Badge {
       return FALSE;
     }
   }
+  public function delete() {
+    if (!$this->isSaved()) return FALSE;
+    
+    return TRUE;
+  }
+  
   public function uuid() {
     // hash by name, ipaddress, and image
     $d = $this->data;

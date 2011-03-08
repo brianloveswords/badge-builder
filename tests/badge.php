@@ -35,12 +35,20 @@ class TestOfBadge extends UnitTestCase {
     $this->assertTrue($badge->isSaved());
     $this->assertEqual($badge->name, 'Badge of Awesome');
   }
+
   /*
   function testDeletingBadges() {
-    $data = $this->generateBadgeData();
-    $badge = Badge::create($data);
+    $uuid = '3ce1874ffa0e2fba328fe4ec94acd7e65db56291';
+    $badge = Badge::find(array('uuid' => $uuid));
+    $this->assertTrue($badge->delete());
+    $this->assertFalse($badge->isSaved());
+    $id = $badge->id;
+    $this->assertTrue(empty($id));
+    $old_badge = Badge::find(array('uuid' => $uuid));
+    $this->assertTrue(empty($old_badge));
   }
   */
+
 
   private function generateBadgeData() {
     return array(

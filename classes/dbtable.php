@@ -45,6 +45,7 @@ class DbTable {
     if (!is_array($search)) {
       throw new DbTableError('findOne(): parameter must be an associative array');
     }
+    // currently we only take the first one.
     $valid_fields = $this->fields();
     $field = mysql_real_escape_string(array_pop(array_keys($search)));
     $value = mysql_real_escape_string(array_pop(array_values($search)));
@@ -61,6 +62,12 @@ class DbTable {
     $query = $this->query(sprintf('SELECT * FROM `%s`', $this->name()));
     while ($row = mysql_fetch_object($query)) $rows[] = $row;
     return $rows;
+  }
+  
+  public function deleteOne($search = NULL) {
+  }
+  
+  private function singularAction($prefix, $terms) {
   }
   
   public function fields() {
