@@ -17,7 +17,7 @@ class TestOfBadge extends UnitTestCase {
       $this->assertTrue(TRUE); // success;
     }
   }
-  /* TODO: renable when deleting is active
+
   function testSavingNewBadge() {
     $data = $this->generateBadgeData();
     $badge = Badge::create($data);
@@ -27,7 +27,7 @@ class TestOfBadge extends UnitTestCase {
     $id = $badge->id;
     $this->assertFalse(empty($id));
   }
-  */
+
   function testFindingBadge() {
     $uuid = '3ce1874ffa0e2fba328fe4ec94acd7e65db56291';
     $badge = Badge::find(array('uuid' => $uuid));
@@ -36,7 +36,6 @@ class TestOfBadge extends UnitTestCase {
     $this->assertEqual($badge->name, 'Badge of Awesome');
   }
 
-  /*
   function testDeletingBadges() {
     $uuid = '3ce1874ffa0e2fba328fe4ec94acd7e65db56291';
     $badge = Badge::find(array('uuid' => $uuid));
@@ -45,9 +44,12 @@ class TestOfBadge extends UnitTestCase {
     $id = $badge->id;
     $this->assertTrue(empty($id));
     $old_badge = Badge::find(array('uuid' => $uuid));
+    
+    print "<pre>";
+    print_r($old_badge);
+    print "</pre>";
     $this->assertTrue(empty($old_badge));
   }
-  */
 
 
   private function generateBadgeData() {

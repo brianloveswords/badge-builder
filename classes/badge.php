@@ -43,8 +43,14 @@ class Badge {
   }
   public function delete() {
     if (!$this->isSaved()) return FALSE;
-    
-    return TRUE;
+    $table = self::dbTable();
+    if ($table->deleteOne(array('id' => $this->data['id']))) {
+      $this->dirty = TRUE;
+      $this->data['id'] = NULL;
+      return TRUE;
+    } else {
+      return FALSE;
+    }
   }
   
   public function uuid() {
@@ -77,10 +83,10 @@ class Badge {
       throw new BadgeError('Badge::find(): parameter must be an associative array');
     }
     $table = self::dbTable();
-    if (($badge_data = (array)$table->findOne($fields)) == FALSE) {
+    if (($badge_data = $table->findOne($fields)) == FALSE) {
       return FALSE;
     };
     $c = __CLASS__;
-    return new $c($badge_data, FALSE);
+    return new $c((array)$badge_data, FALSE);
   }
 }
