@@ -88,7 +88,6 @@ class TestOfDb extends UnitTestCase {
     $this->assertTrue(is_string($rows[0]->mandatory));
   }
 
-
   function testDatabaseDeleteFromTable() {
     $db = new Db();
     $table = $db->useTable('testing');

@@ -28,6 +28,10 @@ class TestOfBadge extends UnitTestCase {
     $this->assertFalse(empty($id));
   }
 
+  
+  /**
+   * Assumes testing from localhost! The uuid gets generated with ip
+   */
   function testFindingBadge() {
     $uuid = '3ce1874ffa0e2fba328fe4ec94acd7e65db56291';
     $badge = Badge::find(array('uuid' => $uuid));
@@ -36,6 +40,9 @@ class TestOfBadge extends UnitTestCase {
     $this->assertEqual($badge->name, 'Badge of Awesome');
   }
 
+  /**
+   * Assumes testing from localhost! The uuid gets generated with ip
+   */
   function testDeletingBadges() {
     $uuid = '3ce1874ffa0e2fba328fe4ec94acd7e65db56291';
     $badge = Badge::find(array('uuid' => $uuid));
