@@ -13,7 +13,15 @@ class Db {
   }
   public function connect() {
     $_db = $this->settings;
-    $h = @mysql_connect($_db['host'], $_db['user'], $_db['password']);
+    $h = @mysql_connect($_db['host'], $_db['user'], $_db['pass']);
+    if (!empty($h)) {
+      // invalidate handle if we can't select the proper schema
+      if (!mysql_select_db($_db['schema'], $h)) $h = false;
+    }
+    if (empty($h)) {
+      $this->error = mysql_error();
+      print_r($this->error);
+    }
     return ($this->handle = $h);
   }
 }
