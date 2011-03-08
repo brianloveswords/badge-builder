@@ -1,5 +1,5 @@
 <?php if (!$_FILES): ?>
- <form action="<?php $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" method="post" name="builder">
+ <form action="#" enctype="multipart/form-data" method="post" name="builder">
     <label>real: <input type='file' name='real'></label><br/>
     <label>fake: <input type='file' name='fake'></label><br/>
     <input type='submit' value='start test'>
