@@ -29,7 +29,7 @@ class Badge {
     return !($this->dirty);
   }
   public function save() {
-    $table = self::db()->useTable('badge');
+    $table = self::dbTable();
     
     $this->data['ipaddr'] = $_SERVER['HTTP_HOST'];
     $this->data['uuid'] = $this->uuid();
@@ -51,10 +51,13 @@ class Badge {
     return $this->data[$name] = $value;
   }
   
-  private static $db;
-  private static function db() {
-    if (empty(self::$db)) self::$db = new Db();
-    return self::$db;
+  private static $table;
+  private static function dbTable() {
+    if (empty(self::$table)) {
+      $db = new Db();
+      self::$table = $db->useTable('badge');
+    }
+    return self::$table;
   }
   public static function create($data = NULL) {
     if (!is_array($data)) {
@@ -67,7 +70,7 @@ class Badge {
     if (!is_array($fields)) {
       throw new BadgeError('Badge::find(): parameter must be an associative array');
     }
-    $table = self::db()->useTable('badge');
+    $table = self::dbTable();
     if (($badge_data = (array)$table->findOne($fields)) == FALSE) {
       return FALSE;
     };
