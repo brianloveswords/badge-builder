@@ -19,6 +19,7 @@ class Badge {
   private $dirty = TRUE;
   private function __construct($data, $new = TRUE){
     $this->data = $data;
+    $this->dirty = $new;
   }
   
   public function __get($name) {
@@ -40,7 +41,7 @@ class Badge {
       return FALSE;
     }
   }
-  private function uuid() {
+  public function uuid() {
     // hash by name, ipaddress, and image
     $d = $this->data;
     return hash('sha1', $d['name'] . $d['ipaddr'] . $d['image']);
@@ -61,5 +62,16 @@ class Badge {
     }
     $c = __CLASS__;
     return new $c($data);
+  }
+  public static function find($fields = NULL) {
+    if (!is_array($fields)) {
+      throw new BadgeError('Badge::find(): parameter must be an associative array');
+    }
+    $table = self::db()->useTable('badge');
+    if (($badge_data = (array)$table->findOne($fields)) == FALSE) {
+      return FALSE;
+    };
+    $c = __CLASS__;
+    return new $c($badge_data, FALSE);
   }
 }
