@@ -75,8 +75,8 @@ class Badge {
     if (!is_array($data)) {
       throw new BadgeError('Badge::create(): parameter must be an associative array');
     }
-    $c = __CLASS__;
-    return new $c($data);
+    $class = __CLASS__;
+    return new $class($data);
   }
   public static function find($fields = NULL) {
     if (!is_array($fields)) {
@@ -86,8 +86,8 @@ class Badge {
     if (($badge_data = $table->findOne($fields)) == FALSE) {
       return FALSE;
     };
-    $c = __CLASS__;
-    return new $c((array)$badge_data, FALSE);
+    $class = __CLASS__;
+    return new $class((array)$badge_data, FALSE);
   }
   public static function findAll() {
     $rows = self::dbTable()->findAll();
