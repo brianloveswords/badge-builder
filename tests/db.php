@@ -88,14 +88,14 @@ class TestOfDb extends UnitTestCase {
     $this->assertTrue(is_string($rows[0]->mandatory));
   }
 
-  /*
+
   function testDatabaseDeleteFromTable() {
     $db = new Db();
     $table = $db->useTable('testing');
     $id = $table->insert(array('mandatory' => ':D'));
-    $this->assertTrue($table->delete(array('id' => $id)));
+    $this->assertTrue($table->deleteOne(array('id' => $id)));
     $old_thing = $table->findOne(array('id' => $id));
     $this->assertTrue(empty($old_thing));
   }
-  */
+
 }

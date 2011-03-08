@@ -45,7 +45,11 @@ class DbTable {
     if (!is_array($search)) {
       throw new DbTableError('findOne(): parameter must be an associative array');
     }
-    return $this->singularAction('SELECT *', $search);
+    if ($result = $this->singularAction('SELECT *', $search)) {
+      return mysql_fetch_object($result);
+    } else {
+      return FALSE;
+    }
   }
   
   public function findAll() {
@@ -54,7 +58,12 @@ class DbTable {
     return $rows;
   }
   
-  public function deleteOne($search = NULL) {
+  public function deleteOne($search) {
+    if (empty($search)) return FALSE;
+    if (!is_array($search)) {
+      throw new DbTableError('deleteOne(): parameter must be an associative array');
+    }
+    return $this->singularAction('DELETE', $search);
   }
   
   private function singularAction($prefix, $terms) {
@@ -66,9 +75,9 @@ class DbTable {
       throw new DbTableError('findOne(): trying to find against a field that does not exist');
     }
     $where = sprintf('`%s` = "%s"', $field, $value);
-    $q_string = sprintf('%s FROM `%s` WHERE %s LIMIT 0,1', $prefix, $this->name(), $where);
+    $q_string = sprintf('%s FROM `%s` WHERE %s LIMIT 1', $prefix, $this->name(), $where);
     if (!($query = $this->query($q_string))) return FALSE;
-    return mysql_fetch_object($query);
+    return $query;
   }
   
   public function fields() {
