@@ -89,4 +89,11 @@ class Badge {
     $c = __CLASS__;
     return new $c((array)$badge_data, FALSE);
   }
+  public static function findAll() {
+    $rows = self::dbTable()->findAll();
+    for($i = 0; $rows[$i]; $i++) {
+      $badges[] = self::create((array)$rows[$i]);
+    }
+    return $badges;
+  }
 }

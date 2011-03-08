@@ -4,7 +4,7 @@ require_once('../classes/badge.php');
 
 class TestOfBadge extends UnitTestCase {
   function testCreatingNewBadge() {
-    $data = $this->generateBadgeData();
+    $data = $this->generateBadgeOne();
     $badge = Badge::create($data);
     $this->assertTrue($badge instanceof Badge);
     $this->assertEqual($badge->name, 'Badge of Awesome');
@@ -19,7 +19,7 @@ class TestOfBadge extends UnitTestCase {
   }
 
   function testSavingNewBadge() {
-    $data = $this->generateBadgeData();
+    $data = $this->generateBadgeOne();
     $badge = Badge::create($data);
     $this->assertFalse($badge->isSaved());
     $badge->save();
@@ -39,7 +39,7 @@ class TestOfBadge extends UnitTestCase {
     $this->assertTrue($badge->isSaved());
     $this->assertEqual($badge->name, 'Badge of Awesome');
   }
-
+  
   /**
    * Assumes testing from localhost! The uuid gets generated with ip
    */
@@ -58,13 +58,38 @@ class TestOfBadge extends UnitTestCase {
     $this->assertTrue(empty($old_badge));
   }
 
-
-  private function generateBadgeData() {
+  function testFindingAllBadges() {
+    $onedata = $this->generateBadgeOne();
+    $twodata = $this->generateBadgeTwo();
+    
+    $badgeone = Badge::create($onedata);
+    $badgeone->save();
+    $badgetwo = Badge::create($twodata);
+    $badgetwo->save();
+  
+    $badges = Badge::findAll();
+    $this->assertTrue(is_array($badges));
+    $this->assertTrue(count($badges) >= 2);
+    $this->assertTrue($badges[0] instanceof Badge);
+  
+    $badgeone->delete();
+    $badgetwo->delete();
+  }
+  
+  private function generateBadgeOne() {
     return array(
       'name' => 'Badge of Awesome',
       'description' => 'For being totally rad',
       'validation' => 'http://google.com',
       'image' => 'now this one is tricky...'
+    );
+  }
+  private function generateBadgeTwo() {
+    return array(
+      'name' => 'Badge of Kickass',
+      'description' => 'For being the most radical of all time',
+      'validation' => 'http://google.com',
+      'image' => 'tricky tricky...'
     );
   }
 }
