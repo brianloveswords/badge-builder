@@ -25,6 +25,10 @@ class Db {
     else return TRUE;
   }
 
+  public function query($string) {
+    $this->last_query = $string;
+    return mysql_query($string);
+  }
   public function useTable($name) {
     return new DbTable($this, $name);
   }
