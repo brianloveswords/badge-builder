@@ -1,5 +1,6 @@
 <?php
 
+class ImageUploadError extends Exception {}
 class ImageUpload {
   public $maxsize = 1073741824; /* 1mb */
   public $destination = 'user/images/';
@@ -53,29 +54,31 @@ class ImageUpload {
     $source = $this->tmppath;
     if (!self::destination_exists($dest)) {
       if (!self::make_destination($dest)) {
-        throw new Exception('Could not make destination directory');
+        throw new ImageUploadError('Could not make destination directory');
       }
     } else if (!self::destination_writable($dest)) {
-      throw new Exception('Destination is not writable and chmod() was ineffective.');
+      throw new ImageUploadError('Destination is not writable and chmod() was ineffective.');
     }
     $ext = image_type_to_extension($this->imginfo[2]);
     $imghash = self::imagehash($source);
     $destname = str_replace('//', '/', sprintf("%s/%s%s", $dest, $imghash, $ext));
     if (!file_exists($destname) && !move_uploaded_file($source, $destname)) {
-      throw new Exception('Could not move uploaded file');
+      throw new ImageUploadError('Could not move uploaded file');
     }
     $this->_hash = $imghash;
     return ($this->finalpath = $destname);
   }
+  
   public function webpath() {
     if (empty($this->finalpath)) {
-      throw new Exception('Cannot get webpath without first moving upload.');
+      throw new ImageUploadError('Cannot get webpath without first moving upload.');
     }
     return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->finalpath);
   }
+  
   public function hash() {
     if (empty($this->_hash)) {
-      throw new Exception('Cannot get hash without first moving upload.');
+      throw new ImageUploadError('Cannot get hash without first moving upload.');
     }
     return $this->_hash;
   }
@@ -83,7 +86,7 @@ class ImageUpload {
   /* static methods */
   public static function imagehash($path) {
     if (!is_readable($path)) {
-      throw new Exception('Source path is not readable');
+      throw new ImageUploadError('Source path is not readable');
     }
     return hash('sha1', file_get_contents($path));
   }
