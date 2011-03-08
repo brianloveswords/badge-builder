@@ -60,4 +60,16 @@ class TestOfDb extends UnitTestCase {
     $this->assertEqual($obj->mandatory, 'wut');
     $this->assertEqual($obj->optional, 'lol');
   }
+
+  function testDatabaseSelectAllFromTable() {
+    $db = new Db();
+    $table = $db->useTable('testing');
+    $table->insert(array('mandatory' => ';(','optional' => 'wah',));
+    $table->insert(array('mandatory' => ':|','optional' => 'meh',));
+    $table->insert(array('mandatory' => ':D'));
+    
+    $rows = $table->findAll();
+    $this->assertTrue(count($rows) >= 3);
+    $this->assertTrue(is_string($rows[0]->mandatory));
+  }
 }
