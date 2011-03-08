@@ -27,12 +27,12 @@ class DbTable {
     if (!is_array($input_values)) {
       throw new DbTableError('insert(): parameter must be an associative array');
     }
-    foreach ($input_values as $key => $value) {
+    foreach ($this->fields() as $key => $value) {
       $in_fields[] = sprintf('`%s`', mysql_real_escape_string($key));
-      if ($value !== NULL) {
-        $in_values[] = sprintf('"%s"', mysql_real_escape_string($value));
+      if ($input_values[$key] !== NULL) {
+        $in_values[] = sprintf('"%s"', mysql_real_escape_string($input_values[$key]));
       } else {
-        $in_values[] = NULL;
+        $in_values[] = 'NULL';
       }
     }
     $q_string = sprintf("INSERT INTO `%s` (%s) VALUES (%s)", $this->name(),
