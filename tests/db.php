@@ -51,6 +51,14 @@ class TestOfDb extends UnitTestCase {
     $this->assertTrue(is_numeric($table->insert($values)));
   }
   
+  function testDatabaseGetFieldsFromTable() {
+    $db = new Db();
+    $table = $db->useTable('testing');
+    $fields = $table->fields();
+    $this->assertTrue(is_array($fields));
+    $this->assertTrue(!empty($fields['id']));
+  }
+  
   function testDatabaseSelectOneFromTable() {
     $db = new Db();
     $table = $db->useTable('testing');
@@ -59,6 +67,13 @@ class TestOfDb extends UnitTestCase {
     $this->assertTrue(is_object($obj));
     $this->assertEqual($obj->mandatory, 'wut');
     $this->assertEqual($obj->optional, 'lol');
+    
+    try {
+      $failobj = $table->findOne(array('bird' => $id));
+      $this->assertTrue(FALSE); // fail, should throw error
+    } catch (DbTableError $e) {
+      $this->assertTrue(TRUE); // succeed
+    }
   }
 
   function testDatabaseSelectAllFromTable() {

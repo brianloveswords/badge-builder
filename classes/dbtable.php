@@ -45,8 +45,12 @@ class DbTable {
     if (!is_array($search)) {
       throw new DbTableError('findOne(): parameter must be an associative array');
     }
+    $valid_fields = $this->fields();
     $field = mysql_real_escape_string(array_pop(array_keys($search)));
     $value = mysql_real_escape_string(array_pop(array_values($search)));
+    if (empty($valid_fields[$field])) {
+      throw new DbTableError('findOne(): trying to find against a field that does not exist');
+    }
     $where = sprintf('`%s` = "%s"', $field, $value);
     $q_string = sprintf('SELECT * FROM `%s` WHERE %s LIMIT 0,1', $this->name(), $where);
     if (!($query = $this->query($q_string))) return FALSE;
@@ -55,11 +59,15 @@ class DbTable {
   
   public function findAll() {
     $query = $this->query(sprintf('SELECT * FROM `%s`', $this->name()));
-    while ($rows[] = mysql_fetch_object($query))
-      ;  //do nothing
+    while ($row = mysql_fetch_object($query)) $rows[] = $row;
     return $rows;
   }
   
+  public function fields() {
+    $query = $this->query(sprintf('SHOW COLUMNS FROM `%s`', $this->name()));
+    while ($row = mysql_fetch_object($query)) $rows[$row->Field] = $row;
+    return $rows;
+  }
   public function name() {
     if (empty($this->db)) {
       throw new DbTableError('name(): Invalid Db class instance');
