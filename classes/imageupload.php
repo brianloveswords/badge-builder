@@ -2,7 +2,7 @@
 
 class ImageUploadError extends Exception {}
 class ImageUpload {
-  public $maxsize = 1073741824; /* 1mb */
+  public $maxsize = 409600; /* 400kb */
   public $destination = 'user/images/';
   public $validtypes = array('png', 'gif', 'jpg', 'jpeg');
   public $error = '';
@@ -45,6 +45,10 @@ class ImageUpload {
   }
   
   public function error() {
+    print "<pre>";
+    print_r($this);
+    print "</pre>";
+    
     if (strlen($this->error) == 0) return FALSE;
     return $this->error;
   }
