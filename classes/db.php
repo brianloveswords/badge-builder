@@ -9,15 +9,12 @@ class Db {
   }
   public function connect() {
     $_db = $this->settings;
+    // surpress errors
     $h = @mysql_connect($_db['host'], $_db['user'], $_db['pass']);
-    if (!empty($h)) {
-      // invalidate handle if we can't select the proper schema
-      if (!mysql_select_db($_db['schema'], $h)) $h = false;
-    }
-    if (empty($h)) {
-      $this->error = mysql_error();
-      print_r($this->error);
-    }
+    // invalidate handle if can't switch to schema
+    if (!empty($h) && !mysql_select_db($_db['schema'], $h)) $h = null;
+    // store error if handle is invalid
+    if (empty($h)) $this->error = mysql_error();
     return ($this->handle = $h);
   }
   public function connectionValid() {
