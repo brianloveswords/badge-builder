@@ -23,6 +23,10 @@
       </p>
       <?php print $script->snippet(); ?>
       <textarea><?php print $script->snippet(); ?></textarea>
+      <p role='description'>
+        If you'd like to return to this page, use this link:
+        <a role='badge-link' href="<?php print $badge->shortId();?>"><?php print $badge->shortLink();?></a>
+      </p>
     </div>
   </body>
 </html>
