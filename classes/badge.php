@@ -65,6 +65,9 @@ class Badge {
     $d = $this->data;
     return hash('sha1', $d['name'] . $d['ipaddr'] . $d['image']);
   }
+  public function webimage() {
+    return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->image);
+  }
   public function __set($name, $value) {
     $this->dirty = TRUE;
     return $this->data[$name] = $value;
