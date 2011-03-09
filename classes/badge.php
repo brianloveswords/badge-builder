@@ -37,7 +37,7 @@ class Badge {
   public function save() {
     $table = self::dbTable();
     
-    $this->data['ipaddr'] = $_SERVER['HTTP_HOST'];
+    $this->data['ipaddr'] = $_SERVER['REMOTE_ADDR'];
     $this->data['uuid'] = $this->uuid();
     if (($id = $table->insert($this->data)) != FALSE) {
       $this->data['id'] = $id;
