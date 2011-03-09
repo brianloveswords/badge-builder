@@ -22,7 +22,7 @@
         affiliation.
       </p>
       <?php print $script->snippet(); ?>
-      <textarea><?php print $script->snippet(); ?></textaera>
+      <textarea><?php print $script->snippet(); ?></textarea>
     </div>
   </body>
 </html>
