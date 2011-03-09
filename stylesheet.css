@@ -28,7 +28,9 @@ a:active {
 a:hover {
   text-decoration: underline;
 }
-
+strong {
+  color: #333;
+}
 label {
   font-weight: bold;
 }
