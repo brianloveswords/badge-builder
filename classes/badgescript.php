@@ -1,7 +1,7 @@
 <?php
 class BadgeScript {
   public $path_prefix = 'script/';
-  public $raw_html = '<li style=\'list-style: none\'><a href=\'%1$s\' target=\'_blank\' style=\'color: black; text-decoration: none;cursor: pointer;display: block; padding: 5px; min-height: 60px;border-radius: 5px; background: #fff; border: 1px solid #aaa;\'>    <img src=\'%2$s\' alt=\'%3$s\' style=\'height: 60px; width: 60px; float: left; margin-right: 5px;\'>    <h1 style=\'font-family: Helvetica Neue, sans-serif; font-size: 16px; line-height: 17px; margin: 5px 0 0; padding: 0;letter-spacing: 0;\'>%3$s</h1>    <h2 style=\'font-family: Helvetica Neue, sans-serif; font-size: 14px; line-height: 15px; margin: 0; padding: 0;letter-spacing: 0;\'>%4$s</h2>    </a></li>'; /* path, title, description */
+  public $raw_html = '<li style=\'list-style: none\'><a href=\'%1$s\' target=\'_blank\' style=\'color: black; text-decoration: none;cursor: pointer;display: block; padding: 5px; min-height: 60px;border-radius: 5px; background: #fff; border: 1px solid #aaa;\'>    <img src=\'%2$s\' alt=\'%3$s\' style=\'height: 60px; width: 60px; float: left; margin-right: 5px;\'>    <h1 style=\'font-family: Helvetica Neue, sans-serif; font-size: 16px; line-height: 17px; margin: 0; padding: 0;letter-spacing: 0;\'>%3$s</h1>    <h2 style=\'font-family: Helvetica Neue, sans-serif; font-size: 13px; line-height: 15px; margin: 2px 0 0; padding: 0;letter-spacing: 0; color: #444;\'>%4$s</h2>    </a></li>'; /* path, title, description */
   
   public function __construct($badge) {
     $this->badge = $badge;
@@ -20,7 +20,7 @@ class BadgeScript {
          iframe.style.border = '0';
          iframe.onload = function(){
            iframe.contentDocument.body.innerHTML = badge_html;
-           iframe.style.height = '110px';
+           iframe.style.height = '90px';
          };
          container.appendChild(iframe);
         }
