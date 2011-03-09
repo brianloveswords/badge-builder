@@ -16,7 +16,6 @@ require_once('db.php');
 class BadgeError extends Exception {}
 class Badge {
   private $data;
-  private $badge_prefix = 'badge/';
   private $dirty = TRUE;
   /* data should include:
        name,
@@ -79,10 +78,10 @@ class Badge {
     $replacements = array('-', '');
     $mini_uuid = substr($this->uuid(), 0, 3);
     $fname = substr(preg_replace($patterns, $replacements, strtolower($this->name)), 0, 16);
-    return ($this->short_id = sprintf('%s-%s', $mini_uuid, $fname));
+    return ($this->short_id = sprintf('%s:%s', $mini_uuid, $fname));
   }
   public function shortLink() {
-    return sprintf('http://%s/%s%s', $_SERVER['SERVER_NAME'], $this->badge_prefix, $this->shortId());
+    return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->shortId());
   }
   
   private static $table;
