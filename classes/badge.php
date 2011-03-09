@@ -17,6 +17,12 @@ class BadgeError extends Exception {}
 class Badge {
   private $data;
   private $dirty = TRUE;
+  /* data should include:
+       name,
+       description,
+       image (path to image on server),
+       validation (url)
+  */
   private function __construct($data, $new = TRUE){
     $this->data = $data;
     $this->dirty = $new;
