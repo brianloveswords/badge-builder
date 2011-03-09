@@ -6,11 +6,20 @@ class ImageUpload {
   public $destination = 'user/images/';
   public $validtypes = array('png', 'gif', 'jpg', 'jpeg');
   public $error = '';
+  public $form_error_msg = array(
+    UPLOAD_ERR_INI_SIZE => 'too big',
+    UPLOAD_ERR_FORM_SIZE => 'too big',
+    UPLOAD_ERR_PARTIAL => 'incomplete upload',
+    UPLOAD_ERR_NO_FILE => 'no file',
+    UPLOAD_ERR_NO_TMP_DIR => 'could not write to disk (no tmp)',
+    UPLOAD_ERR_CANT_WRITE => 'could not write to disk',
+    UPLOAD_ERR_EXTENSION => 'failed by extension',
+  );
   
   public function __construct($form_file) {
     $this->name = $form_file['name'];
     $this->mimetype = $form_file['type'];
-    $this->uploaderr = $form_file['error'];
+    $this->upload_err = $form_file['error'];
     $this->size = $form_file['size'];
     $this->pathinfo = pathinfo($this->name);
     $this->tmppath = $form_file['tmp_name'];
@@ -19,8 +28,8 @@ class ImageUpload {
   
   public function valid() {
     /* trivial checks */
-    if ($this->uploaderr > 0) {
-      $this->error = 'generic error';
+    if ($this->upload_err != UPLOAD_ERR_OK) {
+      $this->error = $this->form_error_msg[$this->upload_err];
       return FALSE;
     }
     if ($this->size > $this->maxsize) {
@@ -45,10 +54,6 @@ class ImageUpload {
   }
   
   public function error() {
-    print "<pre>";
-    print_r($this);
-    print "</pre>";
-    
     if (strlen($this->error) == 0) return FALSE;
     return $this->error;
   }
@@ -78,6 +83,9 @@ class ImageUpload {
       throw new ImageUploadError('Cannot get webpath without first moving upload.');
     }
     return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->finalpath);
+  }
+  public function finalpath() {
+    return $this->finalpath;
   }
   
   public function hash() {
