@@ -7,7 +7,6 @@
   <body>
     <div role='container'>
       <h1>Badge Builder</h1>
-      <?php if (!$complete): ?>
       <p role='description'>
         Badges can be used to signal achievements, skills, qualities or
         affiliations. The Badge Builder allows you to experiment with badges
