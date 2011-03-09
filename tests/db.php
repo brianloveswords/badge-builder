@@ -1,5 +1,6 @@
 <?php
 require_once('simpletest/autorun.php');
+require_once('../settings.php');
 require_once('../classes/db.php');
 
 class TestOfDb extends UnitTestCase {
@@ -9,8 +10,13 @@ class TestOfDb extends UnitTestCase {
   function testDatabaseConnection() {
     $db = new Db();
     $this->assertTrue($db->connectionValid());
-    $db2 = new Db(array('db'=>array()));
-    $this->assertFalse($db2->connectionValid());
+    
+    try {
+      $db2 = new Db(array('db'=>array()));
+      $this->assertTrue(FALSE); // fail, should not connect with bad data
+    } catch(DbError $e) {
+      $this->assertTrue(TRUE);
+    }
   }
   
   /**
@@ -22,6 +28,7 @@ class TestOfDb extends UnitTestCase {
     $this->assertTrue(is_object($table));
     $this->assertTrue($table->name() == 'testing');
   }
+  
   /**
    * Assumes structure for `testing` table:
    *    id INT PRIMARY KEY AUTO_INCREMENT
