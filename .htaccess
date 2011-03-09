@@ -4,4 +4,8 @@ RewriteEngine on
 RewriteRule ^badge/(.*)$ _generate/badge.php?id=$1 [L]
 RewriteRule ^script/(.*)\.js$ _generate/script.php?id=$1 [L]
 
+<Files settings.php>
+order deny,allow
+deny from all
+</Files>
 
