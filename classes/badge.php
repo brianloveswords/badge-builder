@@ -44,6 +44,7 @@ class Badge {
       $this->dirty = FALSE;
       return TRUE;
     } else {
+      $this->error = $table->error();
       return FALSE;
     }
   }
@@ -58,7 +59,7 @@ class Badge {
       return FALSE;
     }
   }
-  
+  public function error() { return $this->error; }
   public function uuid() {
     // hash by name, ipaddress, and image
     $d = $this->data;
