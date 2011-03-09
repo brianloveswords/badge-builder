@@ -4,7 +4,7 @@ if (empty($_POST) || empty($_SERVER)) {
   Utilities::redirect('/');
 }
 
-function __autoload($classname) { @require_once "../classes/" . $classname . ".php"; }
+function __autoload($classname) { require_once "../classes/" . strtolower($classname) . ".php"; }
 $errors = array();
 $image = new ImageUpload($_FILES['image']);
 

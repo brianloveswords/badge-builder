@@ -8,7 +8,7 @@
     <a href="/" role='back-link'>&larr; Back to Beginning</a>
     <div role='container'>
       <h1>Badge Builder</h1>
-      <form action="#" enctype="multipart/form-data" method="post" name="builder">
+      <form action="/build/index.php" enctype="multipart/form-data" method="post" name="builder">
         <div>
           <label>
             <span role='label'>Name</span>
