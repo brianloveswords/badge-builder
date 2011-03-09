@@ -1,0 +1,9 @@
+<?php
+$settings = array(
+  'db' => array(
+    'user' => 'USERNAME',
+    'pass' => 'PASSWORD',
+    'schema' => 'BADGE_TABLE',
+    'host' => ':/tmp/mysql.sock',
+  ),
+);
