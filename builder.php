@@ -1,5 +1,5 @@
 <?php
-// TODO: more elegant error handling
+// TODO: more elegant error reporting
 require_once('settings.php');
 function __autoload($classname) { require_once "classes/" . $classname . ".php"; }
 
@@ -39,7 +39,10 @@ else {
     'validation' => $validation_url,
   );
   $badge = Badge::create($data);
-  print_r($badge);
-  print_r('done');
+  if ($badge->save()) {
+    Utilities::redirect(sprintf('badge/%s', $badge->uuid()));
+  } else {
+    print_r('error saving: ' . $badge->error());
+  }
   //require_once "index.php";
 }
