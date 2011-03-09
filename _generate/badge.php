@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../stylesheet.css">
   </head>
   <body>
-    <a href="/" role='back-link'>&larr; Back to Builder</a>
+    <a href="/" role='back-link'>&larr; Back to Beginning</a>
     <div role='container'>
       <h1>Badge Builder</h1>
       <p role='description'>
