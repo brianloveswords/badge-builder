@@ -2,6 +2,7 @@
 // Make sure the .htaccess file is redirecting.
 require('../settings.php');
 require('../classes/badge.php');
+require_once('../classes/badgescript.php');
 
 $search = array('uuid' => $_GET['id']);
 if ( !($badge = Badge::find($search)) ) {
@@ -9,4 +10,5 @@ if ( !($badge = Badge::find($search)) ) {
   print "<h1>Badge Not Found</h1>";
   exit();
 }
+$script = new BadgeScript($badge);
 

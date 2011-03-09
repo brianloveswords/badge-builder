@@ -1,4 +1,7 @@
-<?php require_once('_findbadge.php'); ?>
+<?php
+  require_once('_findbadge.php');
+  require_once('../classes/badgescript.php');
+?>
 <!doctype html>
 <html>
   <head>
@@ -6,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../stylesheet.css">
   </head>
   <body>
+    <a href="/" role='back-link'>&larr; Back to Builder</a>
     <div role='container'>
       <h1>Badge Builder</h1>
       <p role='description'>
@@ -17,9 +21,8 @@
         demonstrate that particular skill, achievement, quality or
         affiliation.
       </p>
-      <pre>
-        <?php print_r($badge) ?>
-      </pre>
+      <?php print $script->snippet(); ?>
+      <textarea><?php print $script->snippet(); ?></textaera>
     </div>
   </body>
 </html>
