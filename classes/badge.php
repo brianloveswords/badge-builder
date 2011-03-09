@@ -100,6 +100,7 @@ class Badge {
     return new $class((array)$badge_data, FALSE);
   }
   public static function findAll() {
+    $badges = array();
     $rows = self::dbTable()->findAll();
     for($i = 0; $rows[$i]; $i++) {
       $badges[] = self::create((array)$rows[$i]);
