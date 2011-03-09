@@ -3,7 +3,7 @@
 class ImageUploadError extends Exception {}
 class ImageUpload {
   public $maxsize = 409600; /* 400kb */
-  public $destination = 'user/images/';
+  public $destination = '../user/images/';
   public $validtypes = array('png', 'gif', 'jpg', 'jpeg');
   public $error = '';
   public $form_error_msg = array(

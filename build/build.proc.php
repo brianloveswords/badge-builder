@@ -1,10 +1,11 @@
 <?php
 // TODO: more elegant error reporting
-require_once('settings.php');
-function __autoload($classname) { require_once "classes/" . $classname . ".php"; }
+if (empty($_POST) || empty($_SERVER)) {
+  Utilities::redirect('/');
+}
 
+function __autoload($classname) { @require_once "../classes/" . $classname . ".php"; }
 $errors = array();
-
 $image = new ImageUpload($_FILES['image']);
 
 $valid_regex = "@^(https?)://[^\s/$.?#].[^\s]*$@iS";
@@ -40,9 +41,8 @@ else {
   );
   $badge = Badge::create($data);
   if ($badge->save()) {
-    Utilities::redirect(sprintf('badge/%s', $badge->uuid()));
+    Utilities::redirect(sprintf('/badge/%s', $badge->uuid()));
   } else {
     print_r('error saving: ' . $badge->error());
   }
-  //require_once "index.php";
 }
