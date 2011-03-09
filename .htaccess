@@ -1,1 +1,5 @@
 php_value upload_max_filesize 400K
+
+RewriteEngine on
+RewriteRule ^badge/(.*)$ view/badge.php?id=$1 [L]
+RewriteRule ^script/(.*)\.js$ view/script.php?id=$1 [L]
