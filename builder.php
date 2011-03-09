@@ -1,21 +1,45 @@
 <?php
-require_once "imageupload.php";
-require_once "badgescript.php";
+// TODO: more elegant error handling
+require_once('settings.php');
+function __autoload($classname) { require_once "classes/" . $classname . ".php"; }
+
+$errors = array();
 
 $image = new ImageUpload($_FILES['image']);
+
+$valid_regex = "@^(https?)://[^\s/$.?#].[^\s]*$@iS";
+$validation_url = trim($_POST['evidence'], '!"#$%&\'()*+,-./@:;<=>[\\]^_`{|}~');
+$name = trim(htmlspecialchars($_POST['name']));
+$description = trim(htmlspecialchars($_POST['description']));
+
+if (!preg_match($valid_regex, $validation_url)) {
+  $errors['validation'] = array('invalid url', $validation_url);
+}
+if (empty($name)) {
+  $errors['name'] = array('invalid name', $name);
+}
+if (empty($description)) {
+  $errors['description'] = array('invalid description', $description);
+}
 if (!$image->valid()) {
-  print_r($image->error() . PHP_EOL);
-} else {
+  $errors['image'] = array('invalid image: '.$image->error());
+}
+if (count($errors)) {
+  print "<pre>";
+  print_r($errors);
+  print "</pre>";
+}
+
+else {
   $image->move();
-  
-  $path = $image->webpath();
-  $name = htmlspecialchars($_POST['name']);
-  $description = htmlspecialchars($_POST['description']);
-  $evidence = $_POST['evidence'];
-  
-  $script = new BadgeScript($image, $name, $description, $evidence);
-  $script->writefile();
-  
-  $complete = $script->badgeHTML();
-  require_once "index.php";
+  $data = array(
+    'name' => $name,
+    'description' => $description,
+    'image' => $image->finalpath(),
+    'validation' => $validation_url,
+  );
+  $badge = Badge::create($data);
+  print_r($badge);
+  print_r('done');
+  //require_once "index.php";
 }
