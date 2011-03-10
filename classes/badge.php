@@ -78,7 +78,7 @@ class Badge {
     $replacements = array('-', '');
     $mini_uuid = substr($this->uuid(), 0, 3);
     $fname = substr(preg_replace($patterns, $replacements, strtolower($this->name)), 0, 16);
-    return ($this->short_id = trim(sprintf('%s:%s', $mini_uuid, $fname)), '-');
+    return ($this->short_id = trim(sprintf('%s:%s', $mini_uuid, $fname), '-'));
   }
   public function shortLink() {
     return sprintf('http://%s/%s', $_SERVER['SERVER_NAME'], $this->shortId());
